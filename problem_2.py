@@ -33,15 +33,16 @@ def generate_graph_1(n, d):
             graph[neigh].append(vertex)
     return graph
 
-graph = generate_graph_1(100, 7)
-print(graph)
-print(average_degree(graph))
-
 def generate_graph_2(n, d):
     """Generates a graph consisting of n verticies with roughly degree d."""
     # TODO(implement this)
     pass
 
-# graph = generate_graph_2(100, 7)
-# print(graph)
-# print(average_degree(graph))
+if __name__ == '__main__':
+    graph = generate_graph_1(100, 7)
+    print(graph)
+    print(average_degree(graph))
+
+    # graph = generate_graph_2(100, 7)
+    # print(graph)
+    # print(average_degree(graph))

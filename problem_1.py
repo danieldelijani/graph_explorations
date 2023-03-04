@@ -154,11 +154,10 @@ def algorithm5(edges):
             M.add(edge)
     return M, num_recursive_calls
 
-
-# define some test data
-TEST_EDGES = [(1, 2), (2, 3), (5, 2), (3, 4), (6, 3), (4, 5)]
-print(algorithm1(copy.deepcopy(TEST_EDGES)))
-print(algorithm2(copy.deepcopy(TEST_EDGES)))
-print(algorithm3(copy.deepcopy(TEST_EDGES)))
-print(algorithm4(copy.deepcopy(TEST_EDGES)))
-print(algorithm5(copy.deepcopy(TEST_EDGES)))
+if __name__ == '__main__':
+    test_edges = [(1, 2), (2, 3), (5, 2), (3, 4), (6, 3), (4, 5)]
+    print(algorithm1(copy.deepcopy(test_edges)))
+    print(algorithm2(copy.deepcopy(test_edges)))
+    print(algorithm3(copy.deepcopy(test_edges)))
+    print(algorithm4(copy.deepcopy(test_edges)))
+    print(algorithm5(copy.deepcopy(test_edges)))
