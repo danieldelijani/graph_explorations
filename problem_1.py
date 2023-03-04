@@ -1,6 +1,7 @@
 import random
 import copy
 from collections import defaultdict
+from functools import lru_cache
 
 def algorithm1(edges):
     random.shuffle(edges)
@@ -15,16 +16,22 @@ def algorithm1(edges):
 
 def algorithm2(edges):
     def selected1(e):
+        nonlocal num_recursive_calls
+
         node_1 = e[0]
         node_2 = e[1]
         selected = True
         adjacent_edges = graph[node_1].union(graph[node_2]).difference(set([e]))
         for adjacent_edge in adjacent_edges:
             if edge_r_map[adjacent_edge] < edge_r_map[e]:
+                num_recursive_calls += 1
                 if selected1(adjacent_edge):
                     selected = False
         return selected
     
+    # number of times selected function recursively called
+    num_recursive_calls = 0
+
     # create hashmap {node -> edges with node as an endpoint}
     graph = defaultdict(set)
     for edge in edges:
@@ -40,19 +47,25 @@ def algorithm2(edges):
     for edge in edges:
         if selected1(edge):
             M.add(edge)
-    return M
+    return M, num_recursive_calls
 
 def algorithm3(edges):
     def selected2(e):
+        nonlocal num_recursive_calls
+
         node_1 = e[0]
         node_2 = e[1]
         adjacent_edges = graph[node_1].union(graph[node_2]).difference(set([e]))
         for adjacent_edge in adjacent_edges:
             if edge_r_map[adjacent_edge] < edge_r_map[e]:
+                num_recursive_calls += 1
                 if selected2(adjacent_edge):
                     return False
         return True
     
+    # number of times selected function recursively called
+    num_recursive_calls = 0
+
     # create hashmap {node -> edges with node as an endpoint}
     graph = defaultdict(set)
     for edge in edges:
@@ -68,20 +81,26 @@ def algorithm3(edges):
     for edge in edges:
         if selected2(edge):
             M.add(edge)
-    return M
+    return M, num_recursive_calls
 
 def algorithm4(edges):
     def selected3(e):
+        nonlocal num_recursive_calls
+
         node_1 = e[0]
         node_2 = e[1]
         adjacent_edges = graph[node_1].union(graph[node_2]).difference(set([e]))
         sorted_adjacent_edges = sorted(adjacent_edges, key=lambda edge: edge_r_map[edge])
         for adjacent_edge in sorted_adjacent_edges:
             if edge_r_map[adjacent_edge] < edge_r_map[e]:
+                num_recursive_calls += 1
                 if selected3(adjacent_edge):
                     return False
         return True
     
+    # number of times selected function recursively called
+    num_recursive_calls = 0
+
     # create hashmap {node -> edges with node as an endpoint}
     graph = defaultdict(set)
     for edge in edges:
@@ -97,20 +116,26 @@ def algorithm4(edges):
     for edge in edges:
         if selected3(edge):
             M.add(edge)
-    return M
+    return M, num_recursive_calls
 
 def algorithm5(edges):
+    @lru_cache
     def selected4(e):
-        # TODO(use LRU Cache)
+        nonlocal num_recursive_calls
+
         node_1 = e[0]
         node_2 = e[1]
         adjacent_edges = graph[node_1].union(graph[node_2]).difference(set([e]))
         sorted_adjacent_edges = sorted(adjacent_edges, key=lambda edge: edge_r_map[edge])
         for adjacent_edge in sorted_adjacent_edges:
             if edge_r_map[adjacent_edge] < edge_r_map[e]:
+                num_recursive_calls += 1
                 if selected4(adjacent_edge):
                     return False
         return True
+    
+    # number of times selected function recursively called
+    num_recursive_calls = 0
         
     # create hashmap {node -> edges with node as an endpoint}
     graph = defaultdict(set)
@@ -127,7 +152,7 @@ def algorithm5(edges):
     for edge in edges:
         if selected4(edge):
             M.add(edge)
-    return M
+    return M, num_recursive_calls
 
 
 # define some test data
@@ -137,4 +162,3 @@ print(algorithm2(copy.deepcopy(TEST_EDGES)))
 print(algorithm3(copy.deepcopy(TEST_EDGES)))
 print(algorithm4(copy.deepcopy(TEST_EDGES)))
 print(algorithm5(copy.deepcopy(TEST_EDGES)))
-
