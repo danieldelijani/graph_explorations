@@ -7,7 +7,7 @@ def average_degree(edges):
     num_neighbors = defaultdict(int)
     for edge in edges:
         num_neighbors[edge[0]] += 1
-        num_neighbors[edge[1]] += 1
+        num_neighbors[edge[1]] += 1     # TODO(if undirected, delete)
     return sum(num_neighbors.values()) / len(num_neighbors)
 
 def get_euclidean_distance(point1, point2):
