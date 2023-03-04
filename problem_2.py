@@ -2,10 +2,13 @@ import random
 import heapq
 from collections import defaultdict
 
-def average_degree(graph):
+def average_degree(edges):
     """Returns the average degree for verticies in the graph."""
-    lengths = [len(neighs) for neighs in graph.values()]
-    return sum(lengths) / len(lengths)
+    num_neighbors = defaultdict(int)
+    for edge in edges:
+        num_neighbors[edge[0]] += 1
+        num_neighbors[edge[1]] += 1
+    return sum(num_neighbors.values()) / len(num_neighbors)
 
 def get_euclidean_distance(point1, point2):
     """Returns the euclidean distance of two points in R2."""
@@ -25,13 +28,12 @@ def generate_graph_1(n, d):
         return [point for distance, point in closest_points]
 
     vertex_location_map = {vertex:(random.random(), random.random()) for vertex in range(n)}
-    graph = defaultdict(list)
+    edges = []
     for vertex in range(n):
         neighbors = get_closest_points(vertex)
         for neigh in neighbors:
-            graph[vertex].append(neigh)
-            graph[neigh].append(vertex)
-    return graph
+            edges.append((vertex, neigh))
+    return edges
 
 def generate_graph_2(n, d):
     """Generates a graph consisting of n verticies with roughly degree d."""
