@@ -8,7 +8,7 @@ def average_degree(edges):
     for edge in edges:
         num_neighbors[edge[0]] += 1
         num_neighbors[edge[1]] += 1
-    return sum(num_neighbors.values()) / len(num_neighbors)
+    return float(sum(num_neighbors.values())) / len(num_neighbors)
 
 def get_euclidean_distance(point1, point2):
     """Returns the euclidean distance of two points in R2."""
@@ -39,14 +39,22 @@ def generate_graph_1(n, d):
     return edges
 
 def generate_graph_2(n, d):
-    """Generates a graph consisting of n verticies with roughly degree d."""
-    # TODO(implement this)
-    pass
+    # calculate probability of an edge between two nodes
+    p = d / (n - 1)
+
+    # create empty graph
+    edges = []
+
+    # generate edges with probability p
+    for node_1 in range(n):
+        for node_2 in range(node_1, n):
+            if random.random() < p:
+                edges.append((node_1, node_2))
+    return edges
 
 if __name__ == '__main__':
-    graph = generate_graph_1(1000, 10)
+    graph = generate_graph_1(1000, 7)
     print(average_degree(graph))
 
-    # graph = generate_graph_2(100, 7)
-    # print(graph)
-    # print(average_degree(graph))
+    graph = generate_graph_2(1000, 7)
+    print(average_degree(graph))
