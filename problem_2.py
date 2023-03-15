@@ -39,6 +39,7 @@ def generate_graph_1(n, d):
     return edges
 
 def generate_graph_2(n, d):
+    """Generates a graph consisting of n verticies with roughly degree d with Erdős-Rényi model."""
     # calculate probability of an edge between two nodes
     p = d / (n - 1)
 
@@ -47,7 +48,7 @@ def generate_graph_2(n, d):
 
     # generate edges with probability p
     for node_1 in range(n):
-        for node_2 in range(node_1, n):
+        for node_2 in range(node_1 + 1, n):
             if random.random() < p:
                 edges.append((node_1, node_2))
     return edges
