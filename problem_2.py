@@ -7,7 +7,7 @@ def average_degree(edges):
     num_neighbors = defaultdict(int)
     for edge in edges:
         num_neighbors[edge[0]] += 1
-        num_neighbors[edge[1]] += 1     # TODO(if undirected, delete)
+        num_neighbors[edge[1]] += 1
     return sum(num_neighbors.values()) / len(num_neighbors)
 
 def get_euclidean_distance(point1, point2):
@@ -29,10 +29,13 @@ def generate_graph_1(n, d):
 
     vertex_location_map = {vertex:(random.random(), random.random()) for vertex in range(n)}
     edges = []
+    already_added_edges = set() # to handle parallel edges in O(1) time
     for vertex in range(n):
         neighbors = get_closest_points(vertex)
         for neigh in neighbors:
-            edges.append((vertex, neigh))
+            if ((vertex, neigh) not in already_added_edges) and ((neigh, vertex) not in already_added_edges):
+                edges.append((vertex, neigh))
+                already_added_edges.add((vertex, neigh))
     return edges
 
 def generate_graph_2(n, d):
@@ -41,8 +44,7 @@ def generate_graph_2(n, d):
     pass
 
 if __name__ == '__main__':
-    graph = generate_graph_1(100, 7)
-    print(graph)
+    graph = generate_graph_1(1000, 10)
     print(average_degree(graph))
 
     # graph = generate_graph_2(100, 7)
