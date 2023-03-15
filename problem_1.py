@@ -119,7 +119,7 @@ def algorithm4(edges):
     return M, num_recursive_calls
 
 def algorithm5(edges):
-    @lru_cache
+    @lru_cache(maxsize=None)
     def selected4(e):
         nonlocal num_recursive_calls
 

@@ -1,5 +1,5 @@
 from problem_1 import *
-from problem_2 import generate_graph_1
+from problem_2 import generate_graph_1, generate_graph_2
 import pandas as pd
 from tqdm import tqdm
 
@@ -8,7 +8,7 @@ def average(lst):
     return sum(lst) / len(lst)
 
 if __name__ == '__main__':
-    num_verticies = 100
+    num_verticies = 1000
     maximum_d_value = 5
     d_values = []
     algo_2_recurive_calls_over_d = []
@@ -16,18 +16,24 @@ if __name__ == '__main__':
     algo_4_recurive_calls_over_d = []
     algo_5_recurive_calls_over_d = []
 
-    for d in range(1, maximum_d_value, 1):
+    for d in range(1, maximum_d_value+1, 1):
         algo_2_recursives = []
         algo_3_recursives = []
         algo_4_recursives = []
         algo_5_recursives = []
 
-        for _ in tqdm(range(3)):
-            edges = generate_graph_1(num_verticies, d)
-            algo_2_recursives.append(algorithm2(edges)[1])
-            algo_3_recursives.append(algorithm3(edges)[1])
-            algo_4_recursives.append(algorithm4(edges)[1])
-            algo_5_recursives.append(algorithm5(edges)[1])
+        for _ in tqdm(range(2)):
+            edges_1 = generate_graph_1(num_verticies, d)
+            algo_2_recursives.append(algorithm2(edges_1)[1])
+            algo_3_recursives.append(algorithm3(edges_1)[1])
+            algo_4_recursives.append(algorithm4(edges_1)[1])
+            algo_5_recursives.append(algorithm5(edges_1)[1])
+
+            edges_2 = generate_graph_2(num_verticies, d)
+            algo_2_recursives.append(algorithm2(edges_2)[1])
+            algo_3_recursives.append(algorithm3(edges_2)[1])
+            algo_4_recursives.append(algorithm4(edges_2)[1])
+            algo_5_recursives.append(algorithm5(edges_2)[1])
 
         algo_2_recurive_calls_over_d.append(average(algo_2_recursives))
         algo_3_recurive_calls_over_d.append(average(algo_3_recursives))
